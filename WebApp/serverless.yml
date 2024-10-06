@@ -1,0 +1,130 @@
+plugins:
+  - serverless-offline
+
+service: WebApp
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: dev
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-2:851725376302:table/*"
+
+functions:
+
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  login:
+    handler: index.login
+    events:
+      - httpApi:
+          path: /login
+          method: post
+
+  registerUser:
+    handler: index.registerUser
+    events:
+      - httpApi:
+          path: /registerUser
+          method: post
+  
+  addCash:
+    handler: index.addCash
+    events:
+      - httpApi:
+          path: /addCash
+          method: post
+
+  withdrawCash:
+    handler: index.withdrawCash
+    events:
+      - httpApi:
+          path: /withdrawCash
+          method: post
+
+  buyStock:
+    handler: index.buyStock
+    events:
+      - httpApi:
+          path: /buyStock
+          method: post
+
+  sellStock:
+    handler: index.sellStock
+    events:
+      - httpApi:
+          path: /sellStock
+          method: post
+
+  createStock:
+    handler: index.createStock
+    events:
+      - httpApi:
+          path: /createStock
+          method: post
+
+  changeSchedule:
+    handler: index.changeSchedule
+    events:
+      - httpApi:
+          path: /changeSchedule
+          method: post
+
+  listStocks:
+    handler: index.listStocks
+    events:
+      - httpApi:
+          path: /listStocks
+          method: post
+
+  listPortfolio:
+    handler: index.listPortfolio
+    events:
+      - httpApi:
+          path: /listPortfolio
+          method: post
+
+  listHistory:
+    handler: index.listHistory
+    events:
+      - httpApi:
+          path: /listHistory
+          method: post
+
+  getCash:
+    handler: index.getCash
+    events:
+      - httpApi:
+          path: /getCash
+          method: post
+
+  getMarketSchdule:
+    handler: index.getMarketSchedule
+    events:
+      - httpApi:
+          path: /getMarketSchedule
+          method: post
+
+  marketSim:
+    handler: index.marketSIM
+    events:
+      - schedule: rate(7 minutes)
+      - httpApi:
+          path: /marketSIM
+          method: post
